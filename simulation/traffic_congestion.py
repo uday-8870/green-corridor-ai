@@ -10,7 +10,6 @@ ox.settings.use_cache = True
 place = "Hyderabad, India"
 G = ox.graph_from_place(place, network_type="drive")
 
-# Assign random congestion to edges
 for u, v, k, data in G.edges(keys=True, data=True):
     data["congestion"] = random.uniform(0.2, 1.0)
     base_speed = data.get("speed_kph", 40)
@@ -21,7 +20,6 @@ start = nodes[100]
 end = nodes[2000]
 route = nx.shortest_path(G, start, end, weight="length")
 
-# Emergency vehicle simulation
 for i in range(len(route) - 1):
     u = route[i]
     v = route[i + 1]
@@ -29,7 +27,7 @@ for i in range(len(route) - 1):
     edge_data = list(G.get_edge_data(u, v).values())[0]
     speed = max(edge_data["effective_speed"], 5)
 
-    delay = 1 / speed  # simulated time delay
+    delay = 1 / speed  
 
     fig, ax = ox.plot_graph(
         G,
